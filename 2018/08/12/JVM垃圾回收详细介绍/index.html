@@ -111,11 +111,11 @@
 <meta property="og:description" content="GC需要完成的3件事情： 那些内存需要回收？  什么时候回收？  如何回收？   对象是否存活算法 引用计数算法： 基本思想是：有一个地方引用到对象，引用数加1；当引用失效时，引用减1；缺点是存在对象循环引用的问题，所以jvm实现没有采用。  可达性分析算法： 基本思想是：通过“GC Roots”对象作为起始点向下遍历，所走过的路径成为“引用链”，当一个对象到GC Roots没有任何引用链相连，则">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://img.my.csdn.net/uploads/201210/03/1349278110_8410.jpg">
-<meta property="og:image" content="https://img-blog.csdn.net/20160505192254430">
-<meta property="og:image" content="https://img-blog.csdn.net/20160505192308164">
-<meta property="og:image" content="https://img-blog.csdn.net/20160505192422531">
-<meta property="og:image" content="https://img-blog.csdn.net/20160505193622716">
-<meta property="og:updated_time" content="2018-08-12T12:19:54.014Z">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/568153/201707/568153-20170713201524025-856073738.png">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/568153/201707/568153-20170713201605759-288856566.png">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/568153/201707/568153-20170713202540915-187784083.png">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/568153/201707/568153-20170713202621806-60214271.png">
+<meta property="og:updated_time" content="2018-08-12T13:32:55.380Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM垃圾回收详细介绍">
 <meta name="twitter:description" content="GC需要完成的3件事情： 那些内存需要回收？  什么时候回收？  如何回收？   对象是否存活算法 引用计数算法： 基本思想是：有一个地方引用到对象，引用数加1；当引用失效时，引用减1；缺点是存在对象循环引用的问题，所以jvm实现没有采用。  可达性分析算法： 基本思想是：通过“GC Roots”对象作为起始点向下遍历，所走过的路径成为“引用链”，当一个对象到GC Roots没有任何引用链相连，则">
@@ -395,7 +395,7 @@
                 
               
 
-              <time title="创建时间：2018-08-12 20:18:06 / 修改时间：20:19:54" itemprop="dateCreated datePublished" datetime="2018-08-12T20:18:06+08:00">2018-08-12</time>
+              <time title="创建时间：2018-08-12 20:18:06 / 修改时间：21:32:55" itemprop="dateCreated datePublished" datetime="2018-08-12T20:18:06+08:00">2018-08-12</time>
             
 
             
@@ -536,10 +536,11 @@
 <h2 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h2><p><img src="http://img.my.csdn.net/uploads/201210/03/1349278110_8410.jpg" alt="img"> </p>
 <ol>
 <li><p>Serial收集器</p>
-<p><img src="https://img-blog.csdn.net/20160505192254430" alt="Serial"><br>单线程进行GC，虽然已经回收性能差，但是在client模式下JVM分配少的内存的，所以client模式下还是默认的新生代收集器。</p>
+<p><img src="https://images2015.cnblogs.com/blog/568153/201707/568153-20170713201524025-856073738.png" alt="img"> </p>
+<p>单线程进行GC，虽然已经回收性能差，但是在client模式下JVM分配少的内存的，所以client模式下还是默认的新生代收集器。</p>
 </li>
 <li><p>ParNew收集器</p>
-<p><img src="https://img-blog.csdn.net/20160505192308164" alt="ParNew"><br>ParNew收集器其实就是Serial收集器的多线程版本，只有在多核环境下才会比Serial显得有优势。是server模式下首选的新生代收集器。</p>
+<p><img src="https://images2015.cnblogs.com/blog/568153/201707/568153-20170713201605759-288856566.png" alt="img"><br>ParNew收集器其实就是Serial收集器的多线程版本，只有在多核环境下才会比Serial显得有优势。是server模式下首选的新生代收集器。</p>
 </li>
 <li><p>Parallel Scavenge收集器</p>
 <p>Parallel Scavenge收集器是一个新生代的收集器，也是使用复制算法，和ParNew对比，差别就是Parallel Scavenge收集器的目的则是达到一个可控制的吞吐量。吞吐量：CPU用于运行用户代码的时间与CPU总消耗时间的比值。</p>
@@ -548,11 +549,11 @@
 <p>Serial Old是Serial收集器的老年代版本，同样也是一个单线程收集器。它两大用途：一种用途是JDK1.5以及之前的版本中与Parallel Scavenge收集器搭配使用，另外一种是作为CMS收集器的后备方案。</p>
 </li>
 <li><p>Parallel Old收集器</p>
-<p><img src="https://img-blog.csdn.net/20160505192422531" alt="Parrallel Old"> </p>
+<p><img src="https://images2015.cnblogs.com/blog/568153/201707/568153-20170713202540915-187784083.png" alt="img"> </p>
 <p>主要配合Parallel Scavenge收集器使用，实现名副其实的“吞吐量优先”。</p>
 </li>
 <li><p>CMS收集器</p>
-<p><img src="https://img-blog.csdn.net/20160505193622716" alt="CMS"> </p>
+<p><img src="https://images2015.cnblogs.com/blog/568153/201707/568153-20170713202621806-60214271.png" alt="img"> </p>
 </li>
 <li><p>G1收集器</p>
 </li>
